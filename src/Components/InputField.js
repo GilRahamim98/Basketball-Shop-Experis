@@ -12,13 +12,13 @@ function InputField(props) {
         <Col xs="auto">
             <Form.Group >
                 <Form.Label htmlFor="inlineFormInputGroup" >
-                    {props.obj.name}
+                    {props.name}
                 </Form.Label>
                 <InputGroup className="mb-2" hasValidation>
-                    <InputGroup.Text><props.obj.icon></props.obj.icon></InputGroup.Text>
-                    <FormControl id="inlineFormInputGroup" type={props.obj.type} name={props.obj.name.toLowerCase()} placeholder={props.obj.name} onBlur={props.handleChange} />
+                    <InputGroup.Text><props.icon></props.icon></InputGroup.Text>
+                    <FormControl id="inlineFormInputGroup" type={props.type} name={props.name.toLowerCase()} placeholder={props.name} onBlur={props.handleChange} autoComplete="new-password" />
                 </InputGroup>
-                <Errors errors={props.obj.errors}></Errors>
+                <Errors errors={props.errors}></Errors>
 
 
             </Form.Group>

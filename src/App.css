@@ -41,3 +41,8 @@
     transform: rotate(360deg);
   }
 }
+
+.login-fields {
+  width: 30%;
+  margin: 10% 35%;
+}
