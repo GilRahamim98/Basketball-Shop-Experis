@@ -84,7 +84,7 @@ nav {
 
 
 
-input[type="text"] {
+.searchi {
     grid-column: 2/3;
     grid-row: 1/1;
     height: 4vh;
