@@ -7,6 +7,7 @@ import LoginPage from './Components/LoginPage';
 import RegisterPage from './Components/RegisterPage';
 import BasketNavBar from './Components/BasketNavBar';
 import BasketBallFooter from './Components/BasketBallFooter';
+import Home from './Components/Home';
 
 
 function App() {
@@ -15,9 +16,10 @@ function App() {
 
 
       {/* <About></About> */}
-      {/* <ProductDetails></ProductDetails> */}
+      {/* <ProductDetails id={2}></ProductDetails> */}
       {/* <LoginPage></LoginPage> */}
-      <RegisterPage></RegisterPage>
+      {/* <RegisterPage></RegisterPage> */}
+      <Home></Home>
       <BasketBallFooter></BasketBallFooter>
 
 
