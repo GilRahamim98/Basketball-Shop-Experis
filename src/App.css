@@ -42,7 +42,13 @@
   }
 }
 
-.login-fields {
+.main-div {
   width: 30%;
   margin: 10% 35%;
+}
+
+.about-us-div {
+  width: 60%;
+  margin: 5% 20%;
+
 }

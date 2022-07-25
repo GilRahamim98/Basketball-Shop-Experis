@@ -11,15 +11,11 @@ function InputField(props) {
 
         <Col xs="auto">
             <Form.Group >
-                <Form.Label htmlFor="inlineFormInputGroup" >
-                    {props.name}
-                </Form.Label>
                 <InputGroup className="mb-2" hasValidation>
                     <InputGroup.Text><props.icon></props.icon></InputGroup.Text>
                     <FormControl id="inlineFormInputGroup" type={props.type} name={props.name.toLowerCase()} placeholder={props.name} onBlur={props.handleChange} autoComplete="new-password" />
                 </InputGroup>
                 <Errors errors={props.errors}></Errors>
-
 
             </Form.Group>
 
