@@ -99,7 +99,7 @@ function LoginPage(props) {
         <div>
             <BasketNavBar></BasketNavBar>
 
-            <div className='login-fields'>
+            <div className='main-div'>
                 <h1>Login</h1>
                 <Form onSubmit={handleSubmit}>
                     {createLoginFields()}
