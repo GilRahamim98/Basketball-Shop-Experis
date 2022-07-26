@@ -38,12 +38,13 @@ function ProductCard(props) {
         return <Card.Body>
             <Card.Title>{currentProduct[0].name}</Card.Title>
             <Card.Text>
-                {currentProduct[0].description}
-            </Card.Text>
-            <Card.Text>
                 {currentProduct[0].unitPrice}$
             </Card.Text>
             <Button variant="primary">Go To Product</Button>
+            <Button variant="outline-success">🛒</Button>
+            <Button variant="outline-danger">❤</Button>
+
+
         </Card.Body>
     }
 
