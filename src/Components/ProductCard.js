@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import Button from 'react-bootstrap/Button'
 import Card from 'react-bootstrap/Card'
 import Carousel from 'react-bootstrap/Carousel'
-import { getProductById, getProductImgesById } from '../DAL/api'
+import { getProductById, getProductImagesById } from '../DAL/api'
 import LoadingScreen from './LoadingScreen'
 
 
@@ -15,7 +15,7 @@ function ProductCard(props) {
     useEffect(() => {
         async function getData(id) {
             setCurrentProduct(await getProductById(id))
-            setImagesArr(await getProductImgesById(id))
+            setImagesArr(await getProductImagesById(id))
             setLoading(false)
         }
         getData(props.id)

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Navbar, Carousel, Card, Button, Container, Nav, Form, FormControl } from 'react-bootstrap'
 import BasketNavBar from './BasketNavBar'
 import './ProductDetails.css'
-import { getProductById, getProductImgesById } from '../DAL/api'
+import { getProductById, getProductImagesById } from '../DAL/api'
 import LoadingScreen from './LoadingScreen'
 
 function ProductDetails(props) {
@@ -12,7 +12,7 @@ function ProductDetails(props) {
     useEffect(() => {
         async function getCurrentProduct(id) {
             setCurrentProduct(await getProductById(id))
-            setImagesArr(await getProductImgesById(id))
+            setImagesArr(await getProductImagesById(id))
             setLoading(false)
 
         }
