@@ -9,6 +9,7 @@ import BasketNavBar from './Components/BasketNavBar';
 import BasketBallFooter from './Components/BasketBallFooter';
 import Home from './Components/Home';
 import Cart from './Components/Cart';
+import MyAccount from './Components/MyAccount';
 
 
 function App() {
@@ -21,7 +22,8 @@ function App() {
       {/* <LoginPage></LoginPage> */}
       {/* <RegisterPage></RegisterPage> */}
       {/* <Home></Home> */}
-      <Cart></Cart>
+      {/* <Cart></Cart> */}
+      <MyAccount ></MyAccount>
       <BasketBallFooter></BasketBallFooter>
 
 

@@ -45,9 +45,6 @@ function ProductInCartCard(props) {
 
     }
 
-
-
-
     const createCards = () => {
         return orderDetails.map(orderDetail =>
             <div key={`${orderDetail.orderId},${orderDetail.productId}`} className="card mb-3" style={{ maxWidth: "540px" }}>
@@ -58,7 +55,10 @@ function ProductInCartCard(props) {
                     <div className="col-md-8">
                         <div className="card-body">
                             <h5 className="card-title">{getTheCurrentProductDetails(orderDetail.productId).name}</h5>
-                            <input type="number" defaultValue={orderDetail.quantity || ''}></input>
+                            <p>Quantity:</p>
+                            <button className='btn btn-danger btn-sm' style={{ width: "1.5rem", borderRadius: "5px", marginRight: "1%" }} >-</button>
+                            <input type="number" defaultValue={orderDetail.quantity || ''} style={{ width: "1.5rem", borderRadius: "10px" }}></input>
+                            <button className='btn btn-danger btn-sm' style={{ width: "1.5rem", borderRadius: "5px", marginLeft: "1%" }}>+</button>
                             <h5 className="card-title">Total price:{getTheCurrentProductDetails(orderDetail.productId).unitPrice * orderDetail.quantity}$</h5>
 
 
