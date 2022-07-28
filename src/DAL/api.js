@@ -48,6 +48,20 @@ const productImages = [
         src: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR6ssyYuHOc9VFxi3ObFp5np0L6mqFQ5jdDjY1wd5FkrF7Ry1Fi9I4RGZeYGFUgWZ5qUXo&usqp=CAU"
     }
 ]
+const categories = [
+    {
+        categoryId: 1,
+        categoryName: "Basketballs"
+    },
+    {
+        categoryId: 2,
+        categoryName: "Shirts"
+    },
+    {
+        categoryId: 3,
+        categoryName: "Shoes"
+    }
+]
 const orderDetails = [
     {
         orderId: 1,
@@ -88,7 +102,7 @@ const customers = [
         password: "Aa123456"
     },
     {
-        id: 1,
+        id: 2,
         firstName: "Amit",
         lastName: "Idan",
         birthDate: "01-09-2002",
