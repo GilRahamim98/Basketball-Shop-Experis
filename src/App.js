@@ -23,7 +23,7 @@ function App() {
       {/* <RegisterPage></RegisterPage> */}
       {/* <Home></Home> */}
       {/* <Cart></Cart> */}
-      <MyAccount ></MyAccount>
+      {/* <MyAccount ></MyAccount> */}
       <BasketBallFooter></BasketBallFooter>
 
 
