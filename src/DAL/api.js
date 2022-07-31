@@ -14,6 +14,22 @@ const products = [
         categoryId: 2,
         unitPrice: 300,
         unitsInStock: 10
+    },
+    {
+        id: 3,
+        name: "Air Jordan XXXVI",
+        description: "The Air Jordan XXXVI isn't just the next shoe up in the iconic franchise, it's an expression of the drive and energy that sparked a basketball revolution.It's one of the lightest Air Jordan game shoes to date, featuring minimal but durable Leno-Weave upper reinforced with a TPU ribbon",
+        categoryId: 3,
+        unitPrice: 400,
+        unitsInStock: 15
+    },
+    {
+        id: 4,
+        name: "LeBron 19",
+        description: "LeBron plays less in the paint and more at the point, so it makes sense that he wants to feel a little quicker. His 19th signature gives you the feeling of containment but with a lighter design that's ideal for fast, strong players like LeBron who stretch the court.",
+        categoryId: 3,
+        unitPrice: 350,
+        unitsInStock: 20
     }
 ]
 const productImages = [
@@ -46,7 +62,38 @@ const productImages = [
         imageId: 6,
         productId: 1,
         src: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR6ssyYuHOc9VFxi3ObFp5np0L6mqFQ5jdDjY1wd5FkrF7Ry1Fi9I4RGZeYGFUgWZ5qUXo&usqp=CAU"
+    },
+    {
+        imageId: 7,
+        productId: 3,
+        src: "https://static.nike.com/a/images/t_PDP_1280_v1/f_auto,q_auto:eco/978f5e8a-3753-4950-8174-723b309b6e6c/air-jordan-xxxvi-low-basketball-shoes-nJBBHH.png"
+    },
+    {
+        imageId: 8,
+        productId: 3,
+        src: "https://static.nike.com/a/images/t_PDP_1280_v1/f_auto,q_auto:eco/72d2a488-a065-47a1-bf66-e8adfe0ba1f7/air-jordan-xxxvi-low-mens-basketball-shoes-LgcvQl.png"
+    },
+    {
+        imageId: 9,
+        productId: 3,
+        src: "https://cdn.shopify.com/s/files/1/0267/9232/9325/products/DH0833-660-3_620x.jpg?v=165531580"
+    },
+    {
+        imageId: 10,
+        productId: 4,
+        src: "https://static.nike.com/a/images/t_PDP_864_v1/f_auto,b_rgb:f5f5f5/465ab10b-d24f-4d78-98eb-f94db71fbdbd/lebron-19-basketball-shoes-Tshbtg.png"
+    },
+    {
+        imageId: 11,
+        productId: 4,
+        src: "https://static.nike.com/a/images/t_PDP_864_v1/f_auto,b_rgb:f5f5f5/58ae40db-4bab-441a-ba47-0c1ac4755654/lebron-19-basketball-shoes-Tshbtg.png"
+    },
+    {
+        imageId: 12,
+        productId: 4,
+        src: "https://static.nike.com/a/images/t_PDP_864_v1/f_auto,b_rgb:f5f5f5/c13adec0-4806-4540-b499-66952d851ad7/lebron-19-basketball-shoes-Tshbtg.png"
     }
+
 ]
 const categories = [
     {
@@ -75,6 +122,18 @@ const orderDetails = [
         quantity: 4,
         unitPrice: 200
     },
+    {
+        orderId: 2,
+        productId: 1,
+        quantity: 3,
+        unitPrice: 200
+    },
+    {
+        orderId: 2,
+        productId: 3,
+        quantity: 5,
+        unitPrice: 400
+    }
 ]
 const orders = [
     {
@@ -85,6 +144,13 @@ const orders = [
         shipAddress: "Holon,Golmb 23"
 
     },
+    {
+        id: 2,
+        customer: 3,
+        orderDate: "13-07-2022",
+        shippedDate: "25-07-2022",
+        shipAddress: "Ashdod,Roze 4"
+    }
 ]
 
 const customers = [
@@ -113,6 +179,32 @@ const customers = [
         city: "Eilat",
         registerDate: "01-05-2022",
         password: "456789Bb"
+    },
+    {
+        id: 3,
+        firstName: "Dana",
+        lastName: "Modan",
+        birthDate: "03-01-2000",
+        userName: "Dana45",
+        email: "dandan@gmail.com",
+        phone: "0525381622",
+        street: "Roze 4 ",
+        city: "Ashdod",
+        registerDate: "07-05-2022",
+        password: "QweAsd123"
+    },
+    {
+        id: 4,
+        firstName: "Rozi",
+        lastName: "Haviv",
+        birthDate: "02-07-1993",
+        userName: "Roza",
+        email: "rozrozi@gmail.com",
+        phone: "0525381742",
+        street: "Vered ",
+        city: "Eilat",
+        registerDate: "07-06-2022",
+        password: "ZXCasd789"
     },
 ]
 
