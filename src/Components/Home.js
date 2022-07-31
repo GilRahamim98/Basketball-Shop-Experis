@@ -6,6 +6,7 @@ import Carousel from 'react-bootstrap/Carousel'
 import { getProducts } from '../DAL/api'
 import ProductCard from './ProductCard'
 import LoadingScreen from './LoadingScreen'
+import BasketBallFooter from './BasketBallFooter'
 
 
 
@@ -27,10 +28,11 @@ function Home() {
     }
     return (
         <div>
-            <BasketNavBar></BasketNavBar>
             <div className='main-div home-div'>
                 {loading ? <LoadingScreen></LoadingScreen> : createPage()}
             </div>
+            <BasketBallFooter></BasketBallFooter>
+
 
 
 

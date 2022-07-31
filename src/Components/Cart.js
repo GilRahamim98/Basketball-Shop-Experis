@@ -1,12 +1,15 @@
 import React from 'react'
 import BasketNavBar from './BasketNavBar'
 import ProductInCartCard from './ProductInCartCard'
+import BasketBallFooter from './BasketBallFooter'
+
 
 function Cart() {
     return (
         <div>
-            <BasketNavBar></BasketNavBar>
             <ProductInCartCard orderId={1}></ProductInCartCard>
+            <BasketBallFooter></BasketBallFooter>
+
         </div>
     )
 }
