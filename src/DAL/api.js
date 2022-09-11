@@ -174,3 +174,7 @@ export const getOrdersByCustomerId = async (customer_id) => {
 export const getCustomerStreet = async (customer_id) => {
     return fetch(`http://localhost:4000/api/customers/street/${customer_id}`).then(response => response.json()).then(street => street)
 }
+
+export const getItemsBySearch = async (searchValue) => {
+    return fetch(`http://localhost:4000/api/items/search?Search="${searchValue}"`).then(response => response.json()).then(items => items)
+}
