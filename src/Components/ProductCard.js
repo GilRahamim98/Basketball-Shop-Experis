@@ -70,15 +70,24 @@ function ProductCard(props) {
             </Card.Text>
             <Link className="btn btn-warning" to={`/Products/${props.product.id}`}>Go To Product</Link>{" "}
             <Button variant="outline-danger" onClick={() => addToWishList()}>❤</Button>{" "}
-            {props.product.units_in_stock !== 0 ?
-                <OverlayTrigger trigger="click" rootClose placement="right" overlay={popover}>
-                    <Button variant="outline-warning" onClick={() => cartIconClick()}>🛒</Button>
-                </OverlayTrigger>
+            {getCookie("id") !== "" ?
+
+                props.product.units_in_stock !== 0 ?
+                    <OverlayTrigger trigger="click" rootClose placement="right" overlay={popover}>
+                        <Button variant="outline-warning" onClick={() => cartIconClick()}>🛒</Button>
+                    </OverlayTrigger>
+                    :
+                    <Card.Footer className="text-muted">Product currently out of stock!</Card.Footer>
+
                 :
-                <Card.Footer className="text-muted">                    Product currently out of stock!
-                </Card.Footer>
+                props.product.units_in_stock !== 0 ?
+                    <Button variant="outline-warning" onClick={() => cartIconClick()}>🛒</Button>
+
+                    :
+                    <Card.Footer className="text-muted">Product currently out of stock!</Card.Footer>
 
             }
+
         </Card.Body>
     }
 

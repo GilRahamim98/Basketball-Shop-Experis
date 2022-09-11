@@ -8,7 +8,6 @@ import LoadingScreen from './LoadingScreen'
 import BasketBallFooter from './Nav&Footer/BasketBallFooter'
 import { getCookie } from '../common/cookie'
 
-import Spinner from 'react-bootstrap/Spinner';
 
 
 
@@ -46,8 +45,10 @@ function Home() {
             }
 
         }
+
         if (getCookie('id') !== "") {
             getOrderData(getCookie('id'))
+
         }
     }, [created])
     async function addToCart(id, unit_price) {
