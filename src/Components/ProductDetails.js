@@ -13,11 +13,13 @@ function ProductDetails() {
     const [currentProduct, setCurrentProduct] = useState({})
     const [imagesArr, setImagesArr] = useState([])
     const [cart, setCart] = useState([])
+    const [currentId, setCurrentId] = useState()
     const [loading, setLoading] = useState(true)
     let [numOfItems, setNumOfItems] = useState(1)
     useEffect(() => {
         async function getOrderData(id) {
             const orderData = await getCartByUserId(id)
+            setCurrentId(orderData[0].id)
             const cartData = await getOrderDetailsByOrderId(orderData[0].id)
             setCart(cartData)
 
@@ -57,7 +59,7 @@ function ProductDetails() {
                 await addToOrderDetails(currentItem.order_id, currentProduct.id, currentItem.quantity + numOfItems, currentItem.unit_price)
                 return
             }
-            await addToOrderDetails(cart[0].order_id, currentProduct.id, numOfItems, currentProduct.unit_price)
+            await addToOrderDetails(currentId, currentProduct.id, numOfItems, currentProduct.unit_price)
 
         } else {
             alert("You need to login or register first!")
@@ -68,7 +70,7 @@ function ProductDetails() {
         if (getCookie('id') !== "") {
             await addToWishList(getCookie('id'), currentProduct.id)
         } else {
-            alert("you need to login or register first!")
+            alert("You need to login or register first!")
         }
 
     }
@@ -95,28 +97,46 @@ function ProductDetails() {
             <h1 className="card-title">{currentProduct.item_name}</h1>
             <h5 className="card-text">{currentProduct.description}</h5>
             <h3 className="card-text">{currentProduct.unit_price}$</h3>
-            {currentProduct.units_in_stock !== 0 ?
-                <div>
-
+            {getCookie("id") !== "" ?
+                currentProduct.units_in_stock !== 0 ?
                     <div>
-                        <p>Quantity:</p>
-                        <button className='btn btn-danger btn-sm' style={{ width: "1.5rem", borderRadius: "5px", marginRight: "1%" }} onClick={() => decrease()} >-</button>
-                        <input type="number" min={1} max={currentProduct.units_in_stock} value={numOfItems} style={{ width: "1.5rem", borderRadius: "10px" }} onChange={(e) => e.target.value === "" || e.target.value < 1 || e.target.value > currentProduct.units_in_stock ? setNumOfItems(1) : setNumOfItems(e.target.value)}></input>
-                        <button className='btn btn-danger btn-sm' style={{ width: "1.5rem", borderRadius: "5px", marginLeft: "1%" }} onClick={() => increase()}>+</button>
-                    </div>
-                    <div >
+
+                        <div>
+                            <p>Quantity:</p>
+                            <button className='btn btn-danger btn-sm' style={{ width: "1.5rem", borderRadius: "5px", marginRight: "1%" }} onClick={() => decrease()} >-</button>
+                            <input type="number" min={1} max={currentProduct.units_in_stock} value={numOfItems} style={{ width: "1.5rem", borderRadius: "10px" }} onChange={(e) => e.target.value === "" || e.target.value < 1 || e.target.value > currentProduct.units_in_stock ? setNumOfItems(1) : setNumOfItems(e.target.value)}></input>
+                            <button className='btn btn-danger btn-sm' style={{ width: "1.5rem", borderRadius: "5px", marginLeft: "1%" }} onClick={() => increase()}>+</button>
+                        </div>
+                        <div >
+                            <button type="button" className="btn btn-outline-danger btn-lg wishlist" onClick={() => addToWish()}>Add to wishlist ❤</button>
+
+                            <button type="button" className="btn btn-outline-warning btn-lg" onClick={() => addToCart()}>Add to cart 🛒</button>
+
+                        </div>
+                    </div> :
+                    <>
                         <button type="button" className="btn btn-outline-danger btn-lg wishlist" onClick={() => addToWish()}>Add to wishlist ❤</button>
 
-                        <button type="button" className="btn btn-outline-warning btn-lg" onClick={() => addToCart()}>Add to cart 🛒</button>
+                        <h2>Product currently out of stock!</h2>
 
-                    </div>
-                </div> :
-                <>
-                    <button type="button" className="btn btn-outline-danger btn-lg wishlist" onClick={() => addToWish()}>Add to wishlist ❤</button>
+                    </> :
+                currentProduct.units_in_stock !== 0 ?
+                    <div>
 
-                    <h2>Product currently out of stock!</h2>
+                        <div >
+                            <button type="button" className="btn btn-outline-danger btn-lg wishlist" onClick={() => addToWish()}>Add to wishlist ❤</button>
 
-                </>
+                            <button type="button" className="btn btn-outline-warning btn-lg" onClick={() => addToCart()}>Add to cart 🛒</button>
+
+                        </div>
+                    </div> :
+                    <>
+                        <button type="button" className="btn btn-outline-danger btn-lg wishlist" onClick={() => addToWish()}>Add to wishlist ❤</button>
+
+                        <h2>Product currently out of stock!</h2>
+
+                    </>
+
             }
 
 
