@@ -12,8 +12,8 @@ function InputField(props) {
         <Col xs="auto">
             <Form.Group >
                 <InputGroup className="mb-2" hasValidation>
-                    <InputGroup.Text><props.icon></props.icon></InputGroup.Text>
-                    <FormControl id="inlineFormInputGroup" type={props.type} name={props.name.toLowerCase()} placeholder={props.name} onBlur={props.handleChange} autoComplete="new-password" />
+                    {props.icon ? <InputGroup.Text><props.icon></props.icon></InputGroup.Text> : ""}
+                    <FormControl type={props.type} name={props.name.toLowerCase()} placeholder={props.name} onBlur={props.handleChange} defaultValue={props.value} autoComplete="new-password" />
                 </InputGroup>
                 <Errors errors={props.errors}></Errors>
 

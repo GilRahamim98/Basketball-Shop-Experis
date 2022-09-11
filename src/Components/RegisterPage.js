@@ -1,16 +1,21 @@
 import React, { useState } from 'react'
+import { useNavigate } from "react-router-dom";
+
 import { FaUserNinja, FaMailBulk, FaPhoneVolume, FaCity, FaBuilding } from 'react-icons/fa'
 import { RiLockPasswordLine } from "react-icons/ri"
 import { BsFillCalendar2DateFill } from "react-icons/bs"
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
 import { validate } from '../common/validations'
-import BasketNavBar from './BasketNavBar'
+import BasketBallFooter from './Nav&Footer/BasketBallFooter'
+import { registerFunction } from '../DAL/api'
 import InputField from './InputField'
 
 
 
 function RegisterPage() {
+    const navigate = useNavigate();
+
     const [registerObj, setRegisterObj] = useState({
         firstname: {
             value: '',
@@ -154,7 +159,7 @@ function RegisterPage() {
             .filter(field => 'type' in registerObj[field])
             .map(field => <InputField key={field} {...registerObj[field]} handleChange={handleChange} ></InputField>)
     }
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault()
         let isValidSubmit = true
 
@@ -166,14 +171,21 @@ function RegisterPage() {
             setRegisterObj({ ...registerObj })
         }
         if (isValidSubmit) {
-            alert("Welcome Amigo!")
+            const ans = await registerFunction(registerObj.firstname.value, registerObj.lastname.value, registerObj.username.value, registerObj.birthday.value, registerObj.email.value, registerObj.phone.value, registerObj.city.value, new Date(), registerObj.street.value, registerObj.password.value)
+            if (ans?.message) {
+                alert(ans.message)
+            } else {
+                navigate("/")
+                document.location.reload()
+
+            }
+
 
         }
 
     }
     return (
         <div>
-            <BasketNavBar></BasketNavBar>
             <div className='main-div'>
                 <h1>Register</h1>
                 <Form onSubmit={handleSubmit}>
@@ -181,12 +193,9 @@ function RegisterPage() {
                     <Button variant="primary" type="submit" size="lg">
                         Submit
                     </Button>
-
                 </Form>
-
-
-
             </div>
+            <BasketBallFooter></BasketBallFooter>
         </div>
     )
 }

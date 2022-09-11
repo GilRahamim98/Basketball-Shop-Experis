@@ -1,8 +1,7 @@
 import React from 'react'
-import BasketNavBar from './BasketNavBar'
 import Button from 'react-bootstrap/Button'
 import Card from 'react-bootstrap/Card'
-import BasketBallFooter from './BasketBallFooter'
+import BasketBallFooter from './Nav&Footer/BasketBallFooter'
 
 function About() {
     return (

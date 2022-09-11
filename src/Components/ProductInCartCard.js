@@ -1,69 +1,69 @@
 import React, { useEffect, useState } from 'react'
-import { getOrderDetailsByOrderId, getProductFirstImageById, getProductById } from '../DAL/api'
+import { getOrderDetailsByOrderId, getProductFirstImageById, getProductById, changeOrderDetails, deleteOrderDetails } from '../DAL/api'
 
 function ProductInCartCard(props) {
-    const [orderDetails, setOrderDetails] = useState([])
-    const [productsImage, setProductsImage] = useState([])
-    const [productsArr, setProductsArr] = useState([])
+
+
+    const [productImage, setProductImage] = useState([])
+    const [product, setProduct] = useState({})
+
     const [loading, setLoading] = useState(true)
+    const [currentOrderDetails, setCurrentOrderDetails] = useState(props.orderItem)
+
 
     useEffect(() => {
-        async function getCart(id) {
-            setOrderDetails(await getOrderDetailsByOrderId(id))
-
+        async function getImages() {
+            setProductImage(await getProductFirstImageById(props.orderItem.item_id))
         }
-        getCart(props.orderId)
-    }, [])
 
-    useEffect(() => {
-        function getImages() {
-            orderDetails.forEach(async (orderDetail) => {
-                let newImage = await getProductFirstImageById(orderDetail.productId)
-                setProductsImage(prev => [...prev, newImage])
+        async function getProducts() {
+            setProduct(await getProductById(props.orderItem.item_id))
+            setLoading(false)
 
-            })
-        }
-        function getProducts() {
-            orderDetails.forEach(async (orderDetail) => {
-                let newProduct = await getProductById(orderDetail.productId)
-                setProductsArr(prev => [...prev, ...newProduct])
-                setLoading(false)
-
-            })
         }
         getImages()
         getProducts()
 
-    }, [orderDetails])
+    }, [])
 
-    const getTheCurrentImageSrc = (id) => {
-        return productsImage.filter(productImage => productImage.productId === id)[0].src
+    async function decrease() {
+        props.setValueChanged(!props.valueChanged)
 
+        if (currentOrderDetails.quantity === 1) {
+            props.deleteItem(product.id)
+            await deleteOrderDetails(currentOrderDetails.order_id, currentOrderDetails.item_id)
+            return
+        }
+        setCurrentOrderDetails({ ...currentOrderDetails, quantity: currentOrderDetails.quantity - 1 })
+        await changeOrderDetails(currentOrderDetails.order_id, currentOrderDetails.item_id, currentOrderDetails.quantity - 1)
     }
-    const getTheCurrentProductDetails = (id) => {
-        return productsArr.filter(product => product.id === id)[0]
+    async function increase() {
+        props.setValueChanged(!props.valueChanged)
+
+        setCurrentOrderDetails({ ...currentOrderDetails, quantity: currentOrderDetails.quantity + 1 })
+        await changeOrderDetails(currentOrderDetails.order_id, currentOrderDetails.item_id, currentOrderDetails.quantity + 1)
 
     }
 
     const createCards = () => {
-        return orderDetails.map(orderDetail =>
-            <div key={`${orderDetail.orderId},${orderDetail.productId}`} className="card mb-3" style={{ maxWidth: "540px" }}>
+        return (
+            <div key={`${product.id}`} className="card mb-3" style={{ maxWidth: "540px" }}>
                 <div className="row g-0">
                     <div className="col-md-4">
-                        <img src={getTheCurrentImageSrc(orderDetail.productId)} className="img-fluid rounded-start" alt="..."></img>
+                        <img src={productImage.image_src} className="img-fluid rounded-start" alt="..."></img>
                     </div>
                     <div className="col-md-8">
                         <div className="card-body">
-                            <h5 className="card-title">{getTheCurrentProductDetails(orderDetail.productId).name}</h5>
+                            <h5 className="card-title">{product.item_name}</h5>
                             <p>Quantity:</p>
-                            <button className='btn btn-danger btn-sm' style={{ width: "1.5rem", borderRadius: "5px", marginRight: "1%" }} >-</button>
-                            <input type="number" defaultValue={orderDetail.quantity || ''} style={{ width: "1.5rem", borderRadius: "10px" }}></input>
-                            <button className='btn btn-danger btn-sm' style={{ width: "1.5rem", borderRadius: "5px", marginLeft: "1%" }}>+</button>
-                            <h5 className="card-title">Total price:{getTheCurrentProductDetails(orderDetail.productId).unitPrice * orderDetail.quantity}$</h5>
+                            <button className='btn btn-danger btn-sm' style={{ width: "1.5rem", borderRadius: "5px", marginRight: "1%" }} onClick={() => decrease()} >-</button>
+                            <input type="number" value={currentOrderDetails.quantity || ''} style={{ width: "1.5rem", borderRadius: "10px" }} onChange={(e) => console.log(e.target.value)}></input>
+                            <button className='btn btn-danger btn-sm' style={{ width: "1.5rem", borderRadius: "5px", marginLeft: "1%" }} onClick={() => increase()}>+</button>
+                            <h5 className="card-title">Total price:{product.unit_price * currentOrderDetails.quantity}$</h5>
 
 
                         </div>
-                        <button className='btn btn-danger'>🗑</button>
+                        <button className='btn btn-danger' onClick={() => props.deleteItem(product.id)}>🗑</button>
 
                     </div>
                 </div>
@@ -72,11 +72,17 @@ function ProductInCartCard(props) {
     }
 
     return (
-        <div className='main-div'>
+        <div>
+            {
+                loading ? <h1>Hey</h1> : createCards()
+            }
 
-            {loading ? "" : <button className='btn btn-danger btn-lg'>🗑</button>}
-            {loading ? "" : createCards()}
         </div>
+
+
+
+
+
     )
 }
 
