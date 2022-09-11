@@ -129,7 +129,7 @@ function Cart() {
                             <Button variant="secondary" onClick={handleCloseBuy}>
                                 Continue Shopping
                             </Button>
-                            <Button variant="success" onClick={() => { handleCloseBuy(); buyCart(cart[0].order_id, `${street.city},${street.street}`); navigate("/") }}>
+                            <Button variant="success" onClick={() => { handleCloseBuy(); buyCart(cart[0].order_id, `${street.city},${street.street}`); navigate("/"); window.location.reload() }}>
                                 Yes!
                             </Button>
                         </Modal.Footer>
