@@ -9,6 +9,7 @@ import { getCookie } from '../../common/cookie';
 function BasketNavBar(props) {
 
     const [showUser, setShowUser] = useState(false)
+    const [searchValue, setSearchValue] = useState("")
 
 
     useEffect(() => {
@@ -55,9 +56,9 @@ function BasketNavBar(props) {
                             <Link className="nav-link" to="/ContactUs">Contact Us</Link>
                         </li>
                         <li>
-                            <form className="d-flex" role="search">
-                                <input className="form-control me-2 searchi" type="search" placeholder="Search..." aria-label="Search"></input>
-                                <button className="btn btn-outline-light" type="submit" style={{ border: "none" }}>🔎</button>
+                            <form className="d-flex" onSubmit={(e) => e.preventDefault()}>
+                                <input className="form-control me-2 searchi" placeholder="Search..." onChange={(e) => setSearchValue(e.target.value)}></input>
+                                <Link className="btn btn-outline-light" to={searchValue === "" ? "/" : "/search"} state={{ searchValue }} style={{ border: "none", margin: "2% 0", height: "2rem" }}>🔎</Link>
                             </form>
                         </li>
                     </ul>

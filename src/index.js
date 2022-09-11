@@ -18,6 +18,7 @@ import Wishlist from './Components/Wishlist';
 import EditMyProfile from './Components/EditMyProfile';
 import MyOrders from './Components/MyOrders';
 import Order from './Components/Order';
+import Search from './Components/Search/Search';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -40,6 +41,7 @@ root.render(
         <Route path="/MyProfile/editMyAccount" element={<EditMyProfile />} />
         <Route path="/MyProfile/orders" element={<MyOrders />} />
         <Route path="/MyProfile/orders/:id" element={<Order />} />
+        <Route path="/search" element={<Search />} />
 
 
 
