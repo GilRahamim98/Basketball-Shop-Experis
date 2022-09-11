@@ -19,6 +19,7 @@ import EditMyProfile from './Components/EditMyProfile';
 import MyOrders from './Components/MyOrders';
 import Order from './Components/Order';
 import Search from './Components/Search/Search';
+import ChangePassword from './Components/Profile/ChangePassword';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -42,6 +43,7 @@ root.render(
         <Route path="/MyProfile/orders" element={<MyOrders />} />
         <Route path="/MyProfile/orders/:id" element={<Order />} />
         <Route path="/search" element={<Search />} />
+        <Route path="/MyProfile/changePassword" element={<ChangePassword />} />
 
 
 
