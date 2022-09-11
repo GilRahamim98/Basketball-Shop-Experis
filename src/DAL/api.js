@@ -178,3 +178,16 @@ export const getCustomerStreet = async (customer_id) => {
 export const getItemsBySearch = async (searchValue) => {
     return fetch(`http://localhost:4000/api/items/search?Search="${searchValue}"`).then(response => response.json()).then(items => items)
 }
+
+export const updatePassword = async (customer_id, password) => {
+    return fetch(`http://localhost:4000/api/customers/changePassword/${customer_id}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            password
+        })
+
+    }).then(response => response.json())
+}

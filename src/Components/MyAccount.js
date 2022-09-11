@@ -31,6 +31,7 @@ function MyAccount() {
                         <Link className='btn btn-outline-warning' to="/MyProfile/editMyAccount">Edit My Profile</Link>
                         <Link className='btn btn-outline-danger' to="/wishlist">My WishList</Link>
                         <Link className='btn btn-outline-warning' to="/MyProfile/orders">My Orders</Link>
+                        <Link className='btn btn-outline-danger' to="/MyProfile/changePassword">Change Password</Link>
                     </div>
                 </div> :
                 <h1>Loading</h1>
