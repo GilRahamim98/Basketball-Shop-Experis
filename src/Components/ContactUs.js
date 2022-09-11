@@ -1,40 +1,47 @@
 import React, { useState } from 'react'
+import { FaUserNinja, FaMailBulk } from 'react-icons/fa'
+import { RiMessage3Fill } from "react-icons/ri"
+
 import InputField from './InputField'
-import { useNavigate } from "react-router-dom";
-import BasketBallFooter from './Nav&Footer/BasketBallFooter';
 import { validate } from '../common/validations'
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
-import { FaUserNinja } from 'react-icons/fa'
-import { RiLockPasswordLine } from "react-icons/ri"
-import { loginFunction } from '../DAL/api'
+import BasketBallFooter from './Nav&Footer/BasketBallFooter'
 
-
-function LoginPage(props) {
-    const navigate = useNavigate();
+function ContactUs() {
     const [loginForm, setLoginForm] = useState({
         username: {
             value: '',
             validations: {
                 required: true,
-                minLength: 2,
             },
             errors: [],
             type: "text",
             name: "Username",
             icon: FaUserNinja
         },
-        password: {
+        email: {
             value: '',
             validations: {
                 required: true,
-                pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,})/
+                pattern: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
             },
             errors: [],
-            type: "password",
-            name: "Password",
-            icon: RiLockPasswordLine
+            type: "text",
+            name: "Email",
+            icon: FaMailBulk
         },
+        message: {
+            value: '',
+            validations: {
+                required: true,
+            },
+            errors: [],
+            type: "text",
+            name: "Message",
+            icon: RiMessage3Fill
+
+        }
     })
     const handleChange = ({ target: { name, value } }) => {
         const currentInput = loginForm[name]
@@ -42,6 +49,7 @@ function LoginPage(props) {
         currentInput.errors = validate(name, value, currentInput.validations)
         setLoginForm({ ...loginForm })
     }
+
     const validateInput = (input, value = "") => {
         const currentInput = loginForm[input]
         currentInput.value = value
@@ -50,13 +58,6 @@ function LoginPage(props) {
             if (value.length === 0) {
                 currentInput.errors.push({
                     value: `${input} is required`
-                })
-            }
-        }
-        if (currentInput.validations.minLength) {
-            if (value.length < currentInput.validations.minLength) {
-                currentInput.errors.push({
-                    value: `${input} is must be at least ${currentInput.validations.minLength} characters`
                 })
             }
         }
@@ -75,7 +76,7 @@ function LoginPage(props) {
             .filter(field => 'type' in loginForm[field])
             .map(field => <InputField key={field} {...loginForm[field]} handleChange={handleChange} ></InputField>)
     }
-    const handleSubmit = async (event) => {
+    const handleSubmit = (event) => {
         event.preventDefault()
         let isValidSubmit = true
 
@@ -87,21 +88,18 @@ function LoginPage(props) {
             setLoginForm({ ...loginForm })
         }
         if (isValidSubmit) {
-            const ans = await loginFunction(loginForm.username.value, loginForm.password.value)
-            if (ans?.message) {
-                alert(ans.message)
-            } else {
-                navigate("/")
-                document.location.reload()
-            }
+            alert("Thanks for your message we will contact you !")
+
         }
+
     }
 
     return (
 
         <>
+
             <div className='main-div'>
-                <h1>Login</h1>
+                <h1>Contact us</h1>
                 <Form onSubmit={handleSubmit}>
                     {createLoginFields()}
                     <Button variant="primary" type="submit" size="lg">
@@ -109,12 +107,15 @@ function LoginPage(props) {
                     </Button>
 
                 </Form>
+
+
+
+
             </div>
             <BasketBallFooter></BasketBallFooter>
-
         </>
 
     )
 }
 
-export default LoginPage
+export default ContactUs

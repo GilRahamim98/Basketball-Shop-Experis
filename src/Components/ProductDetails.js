@@ -1,33 +1,47 @@
 import React, { useEffect, useState } from 'react'
-import { Navbar, Carousel, Card, Button, Container, Nav, Form, FormControl } from 'react-bootstrap'
-import BasketNavBar from './BasketNavBar'
+import { Carousel } from 'react-bootstrap'
 import './ProductDetails.css'
-import { getProductById, getProductImagesById } from '../DAL/api'
+import { getCookie } from '../common/cookie'
 import LoadingScreen from './LoadingScreen'
+import { useParams } from 'react-router-dom'
+import BasketBallFooter from './Nav&Footer/BasketBallFooter'
+import { addToOrderDetails, getCartByUserId, getOrderDetailsByOrderId, getProductById, getProductImagesById, addToWishList } from '../DAL/api'
 
-function ProductDetails(props) {
+
+function ProductDetails() {
+    const params = useParams()
     const [currentProduct, setCurrentProduct] = useState({})
     const [imagesArr, setImagesArr] = useState([])
+    const [cart, setCart] = useState([])
     const [loading, setLoading] = useState(true)
+    let [numOfItems, setNumOfItems] = useState(1)
     useEffect(() => {
+        async function getOrderData(id) {
+            const orderData = await getCartByUserId(id)
+            const cartData = await getOrderDetailsByOrderId(orderData[0].id)
+            setCart(cartData)
+
+        }
         async function getCurrentProduct(id) {
             setCurrentProduct(await getProductById(id))
             setImagesArr(await getProductImagesById(id))
             setLoading(false)
 
         }
-        getCurrentProduct(props.id)
-
+        getCurrentProduct(params.id)
+        if (getCookie('id') !== "") {
+            getOrderData(getCookie('id'))
+        }
     }, [])
 
 
     const setImages = () => {
         return imagesArr.map(image =>
-            <Carousel.Item key={image.imageId}>
+            <Carousel.Item key={image.id}>
                 <img
                     className="d-block w-100"
-                    src={image.src}
-                    alt={currentProduct[0].name}
+                    src={image.image_src}
+                    alt={currentProduct.item_name}
                 />
 
             </Carousel.Item>
@@ -35,29 +49,82 @@ function ProductDetails(props) {
         )
 
     }
+    async function addToCart() {
+        if (getCookie('id') !== "") {
+            const currentItem = cart.find(item => item.item_id === currentProduct.id)
+
+            if (currentItem !== undefined) {
+                await addToOrderDetails(currentItem.order_id, currentProduct.id, currentItem.quantity + numOfItems, currentItem.unit_price)
+                return
+            }
+            await addToOrderDetails(cart[0].order_id, currentProduct.id, numOfItems, currentProduct.unit_price)
+
+        } else {
+            alert("You need to login or register first!")
+
+        }
+    }
+    const addToWish = async () => {
+        if (getCookie('id') !== "") {
+            await addToWishList(getCookie('id'), currentProduct.id)
+        } else {
+            alert("you need to login or register first!")
+        }
+
+    }
+    async function decrease() {
+        if (numOfItems === 1) {
+
+        } else {
+            setNumOfItems(--numOfItems)
+        }
+
+
+    }
+    async function increase() {
+        if (numOfItems === currentProduct.units_in_stock) {
+
+        } else {
+            setNumOfItems(++numOfItems)
+        }
+
+    }
     const setCurrentProductData = () => {
 
         return <div className="card-body">
-            <h1 className="card-title">{currentProduct[0].name}</h1>
-            <h5 className="card-text">{currentProduct[0].description}</h5>
-            <h3 className="card-text">{currentProduct[0].unitPrice}$</h3>
-            <div >
-                <button type="button" className="btn btn-outline-danger btn-lg wishlist">Add to wishlist ❤</button>
+            <h1 className="card-title">{currentProduct.item_name}</h1>
+            <h5 className="card-text">{currentProduct.description}</h5>
+            <h3 className="card-text">{currentProduct.unit_price}$</h3>
+            {currentProduct.units_in_stock !== 0 ?
+                <div>
 
-                <button type="button" className="btn btn-outline-warning btn-lg">Add to cart 🛒</button>
+                    <div>
+                        <p>Quantity:</p>
+                        <button className='btn btn-danger btn-sm' style={{ width: "1.5rem", borderRadius: "5px", marginRight: "1%" }} onClick={() => decrease()} >-</button>
+                        <input type="number" min={1} max={currentProduct.units_in_stock} value={numOfItems} style={{ width: "1.5rem", borderRadius: "10px" }} onChange={(e) => e.target.value === "" || e.target.value < 1 || e.target.value > currentProduct.units_in_stock ? setNumOfItems(1) : setNumOfItems(e.target.value)}></input>
+                        <button className='btn btn-danger btn-sm' style={{ width: "1.5rem", borderRadius: "5px", marginLeft: "1%" }} onClick={() => increase()}>+</button>
+                    </div>
+                    <div >
+                        <button type="button" className="btn btn-outline-danger btn-lg wishlist" onClick={() => addToWish()}>Add to wishlist ❤</button>
 
-            </div>
+                        <button type="button" className="btn btn-outline-warning btn-lg" onClick={() => addToCart()}>Add to cart 🛒</button>
+
+                    </div>
+                </div> :
+                <>
+                    <button type="button" className="btn btn-outline-danger btn-lg wishlist" onClick={() => addToWish()}>Add to wishlist ❤</button>
+
+                    <h2>Product currently out of stock!</h2>
+
+                </>
+            }
+
 
 
         </div>
     }
     return (
         <div>
-
-
-
-            <BasketNavBar></BasketNavBar>
-
 
             <div className="item">
                 <div className="row g-5">
@@ -72,7 +139,7 @@ function ProductDetails(props) {
                                     aria-label="Slide 3"></button>
                             </div>
                             <Carousel variant="dark">
-                                {loading ? <LoadingScreen></LoadingScreen> : setImages()}
+                                {loading ? "" : setImages()}
 
                             </Carousel>
 
@@ -96,6 +163,7 @@ function ProductDetails(props) {
                     </div>
                 </div>
             </div>
+            <BasketBallFooter></BasketBallFooter>
 
 
         </div >
