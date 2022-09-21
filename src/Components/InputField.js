@@ -13,7 +13,7 @@ function InputField(props) {
             <Form.Group >
                 <InputGroup className="mb-2" hasValidation>
                     {props.icon ? <InputGroup.Text><props.icon></props.icon></InputGroup.Text> : ""}
-                    <FormControl type={props.type} name={props.name.toLowerCase()} placeholder={props.name} onBlur={props.handleChange} defaultValue={props.value} autoComplete="new-password" />
+                    <FormControl type={props.type} name={props.name.toLowerCase()} placeholder={props.placeholder ? props.placeholder : props.name} onBlur={props.handleChange} defaultValue={props.value} autoComplete="new-password" />
                 </InputGroup>
                 <Errors errors={props.errors}></Errors>
 
