@@ -5,10 +5,20 @@ import { validate } from '../../common/validations'
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
 import BasketBallFooter from '../Nav&Footer/BasketBallFooter'
+import { getCookie } from '../../common/cookie'
+import { useNavigate } from 'react-router-dom'
+import { useEffect } from 'react'
 
 function ChangePassword() {
+    const navigate = useNavigate()
+    useEffect(() => {
+        if (getCookie("id") === "") {
+            navigate("/")
+        }
+
+    }, [])
     const [changePasswordForm, setChangePasswordForm] = useState({
-        oldPassword: {
+        oldpassword: {
             value: '',
             validations: {
                 required: true,
@@ -16,10 +26,11 @@ function ChangePassword() {
             },
             errors: [],
             type: "password",
-            name: "Old Password",
+            name: "oldPassword",
+            placeholder: "Old Password"
 
         },
-        newPassword: {
+        newpassword: {
             value: '',
             validations: {
                 required: true,
@@ -27,26 +38,60 @@ function ChangePassword() {
             },
             errors: [],
             type: "password",
-            name: "New Password",
+            name: "newPassword",
+            placeholder: "New Password"
+
 
         },
-        newPasswordValid: {
+
+    })
+    const [newPassword, setNewPassword] = useState({
+        newpasswordvalid: {
             value: '',
             validations: {
                 required: true,
-                pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,})/
+                match: true
             },
             errors: [],
             type: "password",
-            name: "Repeat New Password",
+            name: "newPasswordValid",
+            placeholder: "Verify Password"
+
+
 
         }
     })
     const handleChange = ({ target: { name, value } }) => {
         const currentInput = changePasswordForm[name]
         currentInput.value = value
-        currentInput.errors = validate(name, value, currentInput.validations)
+        currentInput.errors = validate(currentInput.placeholder ? currentInput.placeholder : name, value, currentInput.validations)
         setChangePasswordForm({ ...changePasswordForm })
+    }
+    const validateNewPassword = (newPasswordValue, value, validations) => {
+        const errors = []
+
+        if (validations.required) {
+            if (value.length === 0) {
+                errors.push({
+                    value: `Verify Password is required`
+                })
+            }
+        }
+        if (validations.match) {
+            if (value !== newPasswordValue) {
+                errors.push({
+                    value: `The Passwords Do Not Match`
+                })
+            }
+        }
+        return errors
+
+    }
+    const handleChangePassword = ({ target: { name, value } }) => {
+        const currentInput = newPassword[name]
+        currentInput.value = value
+        currentInput.errors = validateNewPassword(changePasswordForm.newpassword.value, value, currentInput.validations)
+        setNewPassword({ ...newPassword })
     }
     const validateInput = (input, value = "") => {
         const currentInput = changePasswordForm[input]
@@ -55,31 +100,31 @@ function ChangePassword() {
         if (currentInput.validations.required) {
             if (value.length === 0) {
                 currentInput.errors.push({
-                    value: `${input} is required`
+                    value: `${currentInput.placeholder} is required`
                 })
             }
         }
-        if (currentInput.validations.minLength) {
-            if (value.length < currentInput.validations.minLength) {
-                currentInput.errors.push({
-                    value: `${input} is must be at least ${currentInput.validations.minLength} characters`
-                })
+        if (currentInput.validations.match)
+
+            if (currentInput.validations.pattern) {
+                if (!currentInput.validations.pattern.test(value)) {
+                    currentInput.errors.push({
+                        value: `${currentInput.placeholder} is invalid`
+                    })
+                }
             }
-        }
-        if (currentInput.validations.pattern) {
-            if (!currentInput.validations.pattern.test(value)) {
-                currentInput.errors.push({
-                    value: `${input} is invalid`
-                })
-            }
-        }
     }
 
 
-    const createLoginFields = () => {
+    const createFormFields = () => {
         return Object.keys(changePasswordForm)
             .filter(field => 'type' in changePasswordForm[field])
             .map(field => <InputField key={field} {...changePasswordForm[field]} handleChange={handleChange} ></InputField>)
+    }
+    const createNewPasswordField = () => {
+        return Object.keys(newPassword)
+            .filter(field => 'type' in newPassword[field])
+            .map(field => <InputField key={field} {...newPassword[field]} handleChange={handleChangePassword} ></InputField>)
     }
     const handleSubmit = async (event) => {
         event.preventDefault()
@@ -93,13 +138,14 @@ function ChangePassword() {
             setChangePasswordForm({ ...changePasswordForm })
         }
         if (isValidSubmit) {
-            // const ans = await loginFunction(loginForm.username.value, loginForm.password.value)
-            // if (ans?.message) {
-            //     alert(ans.message)
-            // } else {
-            //     navigate("/")
-            //     document.location.reload()
-            // }
+            const ans = await updatePassword(getCookie('id'), { oldPassword: changePasswordForm.oldpassword.value, newPassword: changePasswordForm.newpassword.value })
+
+            if (ans?.message) {
+                alert(ans.message)
+            } else {
+                navigate("/MyProfile")
+                document.location.reload()
+            }
         }
     }
 
@@ -108,7 +154,8 @@ function ChangePassword() {
             <div className='main-div'>
                 <h1>Change Password</h1>
                 <Form onSubmit={handleSubmit}>
-                    {createLoginFields()}
+                    {createFormFields()}
+                    {createNewPasswordField()}
                     <Button variant="primary" type="submit" size="lg">
                         Submit
                     </Button>
