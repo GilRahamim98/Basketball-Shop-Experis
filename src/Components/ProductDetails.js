@@ -5,7 +5,7 @@ import { getCookie } from '../common/cookie'
 import LoadingScreen from './LoadingScreen'
 import { useParams } from 'react-router-dom'
 import BasketBallFooter from './Nav&Footer/BasketBallFooter'
-import { addToOrderDetails, getCartByUserId, getOrderDetailsByOrderId, getProductById, getProductImagesById, addToWishList } from '../DAL/api'
+import { addToOrderDetails, getCartByUserId, getOrderDetailsByOrderId, getProductById, getProductImagesById, addToWishList, getWishList, deleteFromWishList } from '../DAL/api'
 
 
 function ProductDetails() {
@@ -13,6 +13,10 @@ function ProductDetails() {
     const [currentProduct, setCurrentProduct] = useState({})
     const [imagesArr, setImagesArr] = useState([])
     const [cart, setCart] = useState([])
+    const [wishlist, setWishlist] = useState([])
+    const [inWish, setInWish] = useState(false)
+
+
     const [currentId, setCurrentId] = useState()
     const [loading, setLoading] = useState(true)
     let [numOfItems, setNumOfItems] = useState(1)
@@ -27,6 +31,9 @@ function ProductDetails() {
         async function getCurrentProduct(id) {
             setCurrentProduct(await getProductById(id))
             setImagesArr(await getProductImagesById(id))
+            if (getCookie('id') !== "") {
+                setWishlist(await getWishList(getCookie("id")))
+            }
             setLoading(false)
 
         }
@@ -35,6 +42,15 @@ function ProductDetails() {
             getOrderData(getCookie('id'))
         }
     }, [])
+    useEffect(() => {
+        isInWishList()
+
+    }, [wishlist])
+    const isInWishList = () => {
+        const current = wishlist.find(product => product.item_id === currentProduct.id)
+        setInWish(current ? true : false)
+
+    }
 
 
     const setImages = () => {
@@ -66,7 +82,10 @@ function ProductDetails() {
 
         }
     }
-    const addToWish = async () => {
+    const addToWish = async (e) => {
+
+        setInWish(!inWish)
+
         if (getCookie('id') !== "") {
             await addToWishList(getCookie('id'), currentProduct.id)
         } else {
@@ -91,6 +110,13 @@ function ProductDetails() {
         }
 
     }
+
+    async function deleteFromWish(e) {
+
+        setInWish(!inWish)
+        await deleteFromWishList(getCookie('id'), currentProduct.id)
+
+    }
     const setCurrentProductData = () => {
 
         return <div className="card-body">
@@ -108,7 +134,7 @@ function ProductDetails() {
                             <button className='btn btn-danger btn-sm' style={{ width: "1.5rem", borderRadius: "5px", marginLeft: "1%" }} onClick={() => increase()}>+</button>
                         </div>
                         <div >
-                            <button type="button" className="btn btn-outline-danger btn-lg wishlist" onClick={() => addToWish()}>Add to wishlist ❤</button>
+                            {inWish ? <button type="button" className="btn btn-danger btn-lg wishlist" onClick={() => deleteFromWish()}>Remove From Wishlist ❤</button> : <button type="button" className="btn btn-outline-danger btn-lg wishlist" onClick={() => addToWish()}>Add To Wishlist ❤</button>}
 
                             <button type="button" className="btn btn-outline-warning btn-lg" onClick={() => addToCart()}>Add to cart 🛒</button>
 

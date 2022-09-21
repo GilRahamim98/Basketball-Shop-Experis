@@ -1,15 +1,18 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 import ProductCard from './ProductCard'
 import LoadingScreen from './LoadingScreen'
 import BasketBallFooter from './Nav&Footer/BasketBallFooter'
-import { getProductsByCategory, getCartByUserId, getOrderDetailsByOrderId, addToOrderDetails } from '../DAL/api'
+import { getProductsByCategory, getCartByUserId, getOrderDetailsByOrderId, addToOrderDetails, addToWishList, getWishList, deleteFromWishList } from '../DAL/api'
 import { useParams } from 'react-router-dom'
 import { getCookie } from '../common/cookie'
+import { UserWishList } from './Context/UserContext'
+
 
 
 
 function Category() {
     const params = useParams()
+    const [wishlist, setWishlist] = useState([])
 
     const [productsArr, setProductsArr] = useState([])
     const [loading, setLoading] = useState(true)
@@ -17,8 +20,11 @@ function Category() {
     const [cart, setCart] = useState([])
 
     useEffect(() => {
-        function getId() {
+        async function getId() {
             setCurrentCategoryId(params.id)
+            if (getCookie('id') !== "") {
+                setWishlist(await getWishList(getCookie("id")))
+            }
 
         }
         getId()
@@ -50,22 +56,34 @@ function Category() {
         }
         await addToOrderDetails(cart[0].order_id, id, 1, unit_price)
     }
+    async function addToWish(customer_id, item_id) {
+        await addToWishList(customer_id, item_id)
+
+    }
+    async function deleteFromWish(customer_id, item_id) {
+        await deleteFromWishList(customer_id, item_id)
+
+    }
+
 
     const createPage = () => {
-        return productsArr.map(product => <div key={product.id}><ProductCard product={product} addFunc={addToCart}></ProductCard></div>)
+        return productsArr.map(product => <div key={product.id}><ProductCard product={product} addFunc={addToCart} addToWish={addToWish} deleteFromWish={deleteFromWish}></ProductCard></div>)
     }
     return (
-        <div>
-            <div className='main-div category-div'>
-                {loading ? <LoadingScreen></LoadingScreen> : createPage()}
+        <UserWishList.Provider value={wishlist}>
+
+            <div>
+                <div className='main-div category-div'>
+                    {loading ? <LoadingScreen></LoadingScreen> : createPage()}
+                </div>
+                <BasketBallFooter></BasketBallFooter>
+
+
+
+
+
             </div>
-            <BasketBallFooter></BasketBallFooter>
-
-
-
-
-
-        </div>
+        </UserWishList.Provider>
     )
 }
 

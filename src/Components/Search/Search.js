@@ -3,6 +3,7 @@ import { useLocation } from 'react-router-dom'
 import { getItemsBySearch } from '../../DAL/api'
 import BasketBallFooter from '../Nav&Footer/BasketBallFooter'
 import ProductCard from '../ProductCard'
+import ProductCardInSearch from './ProductCardInSearch'
 
 function Search() {
     const location = useLocation()
@@ -20,7 +21,7 @@ function Search() {
         getItemsData()
     }, [searchValue])
     const createPage = () => {
-        return items.map(product => <div key={product.id}><ProductCard product={product} ></ProductCard></div>)
+        return items.map(product => <div key={product.id}><ProductCardInSearch product={product} ></ProductCardInSearch></div>)
     }
 
     return (
