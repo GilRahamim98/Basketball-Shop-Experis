@@ -1,12 +1,13 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 import Row from 'react-bootstrap/Row'
 import Container from 'react-bootstrap/Container'
 import Col from 'react-bootstrap/Col'
-import { getProducts, getCartByUserId, getOrderDetailsByOrderId, addToOrderDetails, createNewOrder, addToWishList } from '../DAL/api'
+import { getProducts, getCartByUserId, getOrderDetailsByOrderId, addToOrderDetails, createNewOrder, addToWishList, getWishList, deleteFromWishList } from '../DAL/api'
 import ProductCard from './ProductCard'
 import LoadingScreen from './LoadingScreen'
 import BasketBallFooter from './Nav&Footer/BasketBallFooter'
 import { getCookie } from '../common/cookie'
+import { UserWishList } from './Context/UserContext'
 
 
 
@@ -19,13 +20,18 @@ function Home() {
     const [cart, setCart] = useState([])
     const [created, setCreated] = useState()
     const [currentId, setCurrentId] = useState()
+    const [wishlist, setWishlist] = useState([])
 
 
     useEffect(() => {
         async function getData() {
             setProductsArr(await getProducts())
+            if (getCookie('id') !== "") {
+                setWishlist(await getWishList(getCookie("id")))
+            }
             setLoading(false)
         }
+
         getData()
     }, [])
     useEffect(() => {
@@ -48,7 +54,6 @@ function Home() {
 
         if (getCookie('id') !== "") {
             getOrderData(getCookie('id'))
-
         }
     }, [created])
     async function addToCart(id, unit_price) {
@@ -65,34 +70,42 @@ function Home() {
         await addToWishList(customer_id, item_id)
 
     }
+    async function deleteFromWish(customer_id, item_id) {
+        await deleteFromWishList(customer_id, item_id)
+
+    }
+
 
     const createPage = () => {
-        return productsArr.map(product => <Col key={product.id}><ProductCard product={product} addFunc={addToCart} addToWish={addToWish}></ProductCard></Col>)
+        return productsArr.map(product => <Col key={product.id}><ProductCard product={product} addFunc={addToCart} addToWish={addToWish} deleteFromWish={deleteFromWish}></ProductCard></Col>)
 
     }
     return (
-        <div>
+        <UserWishList.Provider value={wishlist}>
+            <div>
 
-            <div className='main-div home-div'>
-                {loading ? <LoadingScreen></LoadingScreen> :
-                    <Container>
-                        <Row>
-                            {createPage()}
+                <div className='main-div home-div'>
+                    {loading ? <LoadingScreen></LoadingScreen> :
+                        <Container>
+                            <Row>
+                                {createPage()}
 
-                        </Row>
-                    </Container>
+                            </Row>
+                        </Container>
 
-                }
+                    }
+                </div>
+                <BasketBallFooter></BasketBallFooter>
+
+
+
+
+
+
+
             </div>
-            <BasketBallFooter></BasketBallFooter>
 
-
-
-
-
-
-
-        </div>
+        </UserWishList.Provider>
     )
 }
 

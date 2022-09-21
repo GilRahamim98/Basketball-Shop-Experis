@@ -3,7 +3,7 @@ import Button from 'react-bootstrap/Button'
 import Card from 'react-bootstrap/Card'
 import Carousel from 'react-bootstrap/Carousel'
 import { Link } from 'react-router-dom'
-import { getProductImagesById } from '../DAL/api'
+import { getProductImagesById } from '../../DAL/api'
 
 function ProductCardInSearch(props) {
     const [imagesArr, setImagesArr] = useState([])
