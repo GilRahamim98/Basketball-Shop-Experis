@@ -74,6 +74,20 @@ function ProductCard(props) {
             </Popover.Body>
         </Popover>
     );
+    const wishlistPopover = (
+        <Popover id="popover-basic">
+            <Popover.Body>
+                {props.product.item_name} Added To Wishlist!
+            </Popover.Body>
+        </Popover>
+    );
+    const wishlistDeletePopover = (
+        <Popover id="popover-basic">
+            <Popover.Body>
+                {props.product.item_name} Removed from Wishlist!
+            </Popover.Body>
+        </Popover>
+    );
     const isInWishList = () => {
         const current = wishlist.find(product => product.item_id === props.product.id)
         setInWish(current ? true : false)
@@ -100,7 +114,15 @@ function ProductCard(props) {
                 {props.product.unit_price}$
             </Card.Text>
             <Link className="btn btn-warning" to={`/Products/${props.product.id}`}>Go To Product</Link>{" "}
-            {inWish ? <Button variant="danger" onClick={() => removeFromWish()}>❤</Button> : <Button variant="outline-danger" onClick={() => addToWish()}>❤</Button>}{" "}
+            {inWish ?
+                <OverlayTrigger trigger="click" rootClose placement="top" overlay={wishlistPopover}>
+                    <Button variant="danger" onClick={() => removeFromWish()}>❤</Button>
+                </OverlayTrigger>
+                :
+                <OverlayTrigger trigger="click" rootClose placement="top" overlay={wishlistDeletePopover}>
+                    <Button variant="outline-danger" onClick={() => addToWish()}>❤</Button>
+                </OverlayTrigger>
+            }{" "}
             {getCookie("id") !== "" ?
 
                 props.product.units_in_stock !== 0 ?
