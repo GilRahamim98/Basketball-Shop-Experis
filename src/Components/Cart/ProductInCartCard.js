@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { getOrderDetailsByOrderId, getProductFirstImageById, getProductById, changeOrderDetails, deleteOrderDetails } from '../DAL/api'
+import { getOrderDetailsByOrderId, getProductFirstImageById, getProductById, changeOrderDetails, deleteOrderDetails } from '../../DAL/api'
 
 function ProductInCartCard(props) {
 
@@ -47,10 +47,10 @@ function ProductInCartCard(props) {
 
     const createCards = () => {
         return (
-            <div key={`${product.id}`} className="card mb-3" style={{ maxWidth: "540px" }}>
+            <div key={`${product.id}`} className="card mb-3" style={{ maxWidth: "90%", marginLeft: "15%" }}>
                 <div className="row g-0">
                     <div className="col-md-4">
-                        <img src={productImage.image_src} className="img-fluid rounded-start" alt="..."></img>
+                        <img src={productImage.image_src} className="img-fluid rounded-start" alt={product.item_name} style={{ maxWidth: "60%" }}></img>
                     </div>
                     <div className="col-md-8">
                         <div className="card-body">

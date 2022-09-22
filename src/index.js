@@ -8,7 +8,7 @@ import BasketNavBar from './Components/Nav&Footer/BasketNavBar';
 import Home from './Components/Home';
 import About from './Components/About';
 import LoginPage from './Components/LoginPage';
-import Cart from './Components/Cart';
+import Cart from './Components/Cart/Cart';
 import MyAccount from './Components/MyAccount';
 import ProductDetails from './Components/ProductDetails';
 import RegisterPage from './Components/RegisterPage';

@@ -79,11 +79,12 @@ nav {
     grid-column: 2/3;
     grid-row: 1/1;
     min-height: 2rem;
-    width: 50vw;
-    border-radius: 26px;
+    max-width: 30rem;
+    border-radius: 20px;
     border: 1px solid #ada9a9;
     padding: 1% 5vw;
-    margin-top: 2%;
+    margin: 2% 0 2% 5%;
+
     outline: 0;
 
 }
