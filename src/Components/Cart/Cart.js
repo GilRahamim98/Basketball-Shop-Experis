@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import ProductInCartCard from './ProductInCartCard'
-import BasketBallFooter from './Nav&Footer/BasketBallFooter'
-import { getCartByUserId, getOrderDetailsByOrderId, createNewOrder, getCustomerStreet } from '../DAL/api.js'
+import BasketBallFooter from '../Nav&Footer/BasketBallFooter'
+import { getCartByUserId, getOrderDetailsByOrderId, createNewOrder, getCustomerStreet } from '../../DAL/api.js'
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import { Link } from "react-router-dom";
-import { deleteOrderDetails, buyCart } from '../DAL/api'
-import { getCookie, setCookie } from '../common/cookie'
+import { deleteOrderDetails, buyCart } from '../../DAL/api'
+import { getCookie, setCookie } from '../../common/cookie'
 import { useNavigate } from 'react-router-dom'
 
 
@@ -99,8 +99,9 @@ function Cart() {
     return (
         <div>
             {cart.length > 0 ?
-                <div className='main-div'>
-                    <button className='btn btn-danger btn-lg' onClick={handleShowEmpty}>🗑</button>
+                <div className='main-div' style={{ margin: "5% 0", width: "90%" }}>
+                    <button className='btn btn-danger btn-lg' id="clearCart" onClick={handleShowEmpty}>Clear Cart</button>
+
                     <Modal show={showEmpty} onHide={handleCloseEmpty}>
                         <Modal.Header closeButton>
                             <Modal.Title>Empty Cart?</Modal.Title>
@@ -115,9 +116,9 @@ function Cart() {
                             </Button>
                         </Modal.Footer>
                     </Modal>
-                    {cart.map(item => createCardItem(item))}
-                    <h1>Total Price: {totalPriceValue()}$ </h1>
 
+                    {cart.map(item => createCardItem(item))}
+                    <h1 id="totalPrice">Total Price: {totalPriceValue()}$ </h1>
                     <button className='flickingBtn' onClick={handleShowBuy}>Buy now!</button>
                     <Modal show={showBuy} onHide={handleCloseBuy}>
                         <Modal.Header closeButton>
@@ -134,6 +135,9 @@ function Cart() {
                             </Button>
                         </Modal.Footer>
                     </Modal>
+
+
+
 
                 </div> :
                 <div className='main-div'>
