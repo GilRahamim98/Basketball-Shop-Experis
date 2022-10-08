@@ -1,13 +1,13 @@
 import React, { useState } from 'react'
-import InputField from './InputField'
+import InputField from '../InputField'
 import { useNavigate } from "react-router-dom";
-import BasketBallFooter from './Nav&Footer/BasketBallFooter';
-import { validate } from '../common/validations'
+import BasketBallFooter from '../Nav&Footer/BasketBallFooter';
+import { validate } from '../../common/validations'
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
 import { FaUserNinja } from 'react-icons/fa'
 import { RiLockPasswordLine } from "react-icons/ri"
-import { loginFunction } from '../DAL/api'
+import { loginFunction } from '../../DAL/api'
 
 
 function LoginPage(props) {
@@ -73,7 +73,7 @@ function LoginPage(props) {
     const createLoginFields = () => {
         return Object.keys(loginForm)
             .filter(field => 'type' in loginForm[field])
-            .map(field => <InputField key={field} {...loginForm[field]} handleChange={handleChange} ></InputField>)
+            .map(field => <InputField key={field} {...loginForm[field]} handleChange={handleChange} signForm={true}></InputField>)
     }
     const handleSubmit = async (event) => {
         event.preventDefault()
@@ -101,7 +101,7 @@ function LoginPage(props) {
 
         <>
             <div className='main-div'>
-                <h1>Login</h1>
+                <h1>Sign into your account</h1>
                 <Form onSubmit={handleSubmit}>
                     {createLoginFields()}
                     <Button variant="primary" type="submit" size="lg">
