@@ -6,10 +6,10 @@ import { RiLockPasswordLine } from "react-icons/ri"
 import { BsFillCalendar2DateFill } from "react-icons/bs"
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
-import { validate } from '../common/validations'
-import BasketBallFooter from './Nav&Footer/BasketBallFooter'
-import { registerFunction } from '../DAL/api'
-import InputField from './InputField'
+import { validate } from '../../common/validations'
+import BasketBallFooter from '../Nav&Footer/BasketBallFooter'
+import { registerFunction } from '../../DAL/api'
+import InputField from '../InputField'
 
 
 
