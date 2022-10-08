@@ -24,7 +24,8 @@ function ProductCard(props) {
 
     useEffect(() => {
         async function getData(id) {
-            setImagesArr(await getProductImagesById(id))
+            // setImagesArr(await getProductImagesById(id))
+            setImagesArr(props.product.images)
             isInWishList()
             setLoading(false)
         }

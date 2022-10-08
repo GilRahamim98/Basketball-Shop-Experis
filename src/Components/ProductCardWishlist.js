@@ -11,15 +11,15 @@ function ProductCardWishlist(props) {
 
 
     useEffect(() => {
-        async function getImages() {
-            setProductImage(await getProductFirstImageById(props.item.item_id))
-        }
+
         async function getProducts() {
-            setProduct(await getProductById(props.item.item_id))
+            const item = await getProductById(props.item.item_id)
+            setProduct(item)
+            setProductImage(item.images[0])
             setLoading(false)
 
         }
-        getImages()
+
         getProducts()
 
     }, [])

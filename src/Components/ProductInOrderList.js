@@ -12,16 +12,15 @@ function ProductInOrderList(props) {
     const [loading, setLoading] = useState(true)
     useEffect(() => {
 
-        async function getImages(id) {
-            setProductImage(await getProductFirstImageById(id))
-        }
 
         async function getProducts(id) {
-            setProduct(await getProductById(id))
+            const item = await getProductById(id)
+            setProduct(item)
+            setProductImage(item.images[0])
+
             setLoading(false)
 
         }
-        getImages(props.orderItem.item_id)
         getProducts(props.orderItem.item_id)
 
 

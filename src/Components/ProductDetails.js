@@ -29,8 +29,9 @@ function ProductDetails() {
 
         }
         async function getCurrentProduct(id) {
-            setCurrentProduct(await getProductById(id))
-            setImagesArr(await getProductImagesById(id))
+            const currentItem = await getProductById(id)
+            setCurrentProduct(currentItem)
+            setImagesArr(currentItem.images)
             if (getCookie('id') !== "") {
                 setWishlist(await getWishList(getCookie("id")))
             }
