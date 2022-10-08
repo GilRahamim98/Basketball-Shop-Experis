@@ -114,14 +114,21 @@ function ProductCard(props) {
                 {props.product.unit_price}$
             </Card.Text>
             <Link className="btn btn-warning" to={`/Products/${props.product.id}`}>Go To Product</Link>{" "}
-            {inWish ?
-                <OverlayTrigger trigger="click" rootClose placement="top" overlay={wishlistPopover}>
-                    <Button variant="danger" onClick={() => removeFromWish()}>❤</Button>
-                </OverlayTrigger>
+
+            {getCookie("id") !== "" ?
+
+                inWish ?
+                    <OverlayTrigger trigger="click" rootClose placement="top" overlay={wishlistPopover}>
+                        <Button variant="danger" onClick={() => removeFromWish()}>❤</Button>
+                    </OverlayTrigger>
+                    :
+                    <OverlayTrigger trigger="click" rootClose placement="top" overlay={wishlistDeletePopover}>
+                        <Button variant="outline-danger" onClick={() => addToWish()}>❤</Button>
+                    </OverlayTrigger>
                 :
-                <OverlayTrigger trigger="click" rootClose placement="top" overlay={wishlistDeletePopover}>
-                    <Button variant="outline-danger" onClick={() => addToWish()}>❤</Button>
-                </OverlayTrigger>
+                <Button variant="outline-danger" onClick={() => addToWish()}>❤</Button>
+
+
             }{" "}
             {getCookie("id") !== "" ?
 
