@@ -12,11 +12,11 @@ function ProductCardInSearch(props) {
 
 
     useEffect(() => {
-        async function getData(id) {
-            setImagesArr(await getProductImagesById(id))
+        async function getData() {
+            setImagesArr(props.product.images)
             setLoading(false)
         }
-        getData(props.product.id)
+        getData()
     }, [])
 
     const setImages = () => {
@@ -39,7 +39,7 @@ function ProductCardInSearch(props) {
             <Card.Text>
                 {props.product.unit_price}$
             </Card.Text>
-            <Link className="btn btn-warning" to={`/Products/${props.product.id}`}>Go To Product</Link>{" "}
+            <Link className="btn btn-warning" to={`/Products/${props.product.id}`} state={{ product: props.product }}>Go To Product</Link>{" "}
 
             {
                 props.product.units_in_stock !== 0 ? "" :
