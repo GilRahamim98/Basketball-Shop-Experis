@@ -3,14 +3,15 @@ import { Carousel } from 'react-bootstrap'
 import './ProductDetails.css'
 import { getCookie } from '../common/cookie'
 import LoadingScreen from './LoadingScreen'
-import { useParams } from 'react-router-dom'
+import { useParams, useLocation } from 'react-router-dom'
 import BasketBallFooter from './Nav&Footer/BasketBallFooter'
 import { addToOrderDetails, getCartByUserId, getOrderDetailsByOrderId, getProductById, getProductImagesById, addToWishList, getWishList, deleteFromWishList } from '../DAL/api'
 
 
 function ProductDetails() {
-    const params = useParams()
-    const [currentProduct, setCurrentProduct] = useState({})
+    const location = useLocation()
+    const currentProduct = location.state.product
+
     const [imagesArr, setImagesArr] = useState([])
     const [cart, setCart] = useState([])
     const [wishlist, setWishlist] = useState([])
@@ -28,17 +29,16 @@ function ProductDetails() {
             setCart(cartData)
 
         }
-        async function getCurrentProduct(id) {
-            const currentItem = await getProductById(id)
-            setCurrentProduct(currentItem)
-            setImagesArr(currentItem.images)
+        async function getCurrentProduct() {
+
+            setImagesArr(currentProduct.images)
             if (getCookie('id') !== "") {
                 setWishlist(await getWishList(getCookie("id")))
             }
             setLoading(false)
 
         }
-        getCurrentProduct(params.id)
+        getCurrentProduct()
         if (getCookie('id') !== "") {
             getOrderData(getCookie('id'))
         }
