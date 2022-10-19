@@ -23,13 +23,13 @@ function ProductCard(props) {
 
 
     useEffect(() => {
-        async function getData(id) {
+        async function getData() {
             // setImagesArr(await getProductImagesById(id))
             setImagesArr(props.product.images)
             isInWishList()
             setLoading(false)
         }
-        getData(props.product.id)
+        getData()
     }, [])
 
 
@@ -114,7 +114,7 @@ function ProductCard(props) {
             <Card.Text>
                 {props.product.unit_price}$
             </Card.Text>
-            <Link className="btn btn-warning" to={`/Products/${props.product.id}`}>Go To Product</Link>{" "}
+            <Link className="btn btn-warning" to={`/Products/${props.product.id}`} state={{ product: props.product }}>Go To Product</Link>{" "}
 
             {getCookie("id") !== "" ?
 
