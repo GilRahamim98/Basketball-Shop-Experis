@@ -9,8 +9,10 @@ import { addToOrderDetails, getCartByUserId, getOrderDetailsByOrderId, getProduc
 
 
 function ProductDetails() {
+    const params = useParams()
     const location = useLocation()
-    const currentProduct = location.state.product
+    // const currentProduct = location.state.product
+    const [currentProduct, setCurrentProduct] = useState(location.state?.product)
 
     const [imagesArr, setImagesArr] = useState([])
     const [cart, setCart] = useState([])
@@ -31,7 +33,13 @@ function ProductDetails() {
         }
         async function getCurrentProduct() {
 
-            setImagesArr(currentProduct.images)
+            if (!currentProduct) {
+                const product = await getProductById(params.id)
+                setCurrentProduct(product)
+                setImagesArr(product.images)
+            } else {
+                setImagesArr(currentProduct.images)
+            }
             if (getCookie('id') !== "") {
                 setWishlist(await getWishList(getCookie("id")))
             }
