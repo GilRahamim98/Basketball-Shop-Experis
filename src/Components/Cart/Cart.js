@@ -99,7 +99,7 @@ function Cart() {
     return (
         <div>
             {cart.length > 0 ?
-                <div className='main-div' style={{ margin: "5% 0", width: "90%" }}>
+                <div className='main-div cart' >
                     <button className='btn btn-danger btn-lg' id="clearCart" onClick={handleShowEmpty}>Clear Cart</button>
 
                     <Modal show={showEmpty} onHide={handleCloseEmpty}>

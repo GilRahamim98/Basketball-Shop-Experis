@@ -6,9 +6,9 @@ import { getProductsByCategory, getCartByUserId, getOrderDetailsByOrderId, addTo
 import { useParams } from 'react-router-dom'
 import { getCookie } from '../common/cookie'
 import { UserWishList } from './Context/UserContext'
-
-
-
+import Row from 'react-bootstrap/Row'
+import Container from 'react-bootstrap/Container'
+import Col from 'react-bootstrap/Col'
 
 function Category() {
     const params = useParams()
@@ -67,14 +67,21 @@ function Category() {
 
 
     const createPage = () => {
-        return productsArr.map(product => <div key={product.id}><ProductCard product={product} addFunc={addToCart} addToWish={addToWish} deleteFromWish={deleteFromWish}></ProductCard></div>)
+        return productsArr.map(product => <Col key={product.id}><ProductCard product={product} addFunc={addToCart} addToWish={addToWish} deleteFromWish={deleteFromWish}></ProductCard></Col>)
     }
     return (
         <UserWishList.Provider value={wishlist}>
 
             <div>
-                <div className='main-div category-div'>
-                    {loading ? <LoadingScreen></LoadingScreen> : createPage()}
+                <div className='main-div home-div'>
+                    {loading ? <LoadingScreen></LoadingScreen> :
+                        <Container>
+                            <Row>
+
+                                {createPage()}
+
+                            </Row>
+                        </Container>}
                 </div>
                 <BasketBallFooter></BasketBallFooter>
 

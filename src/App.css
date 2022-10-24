@@ -54,9 +54,14 @@ input[type=number] {
 
 .main-div {
 
-  width: 30%;
-  margin: 10% 35%;
+  width: 50%;
+  margin: 10% 20% 30%;
 
+}
+
+.cart {
+  margin: 5% 0 30%;
+  width: 90%;
 }
 
 .about-us-div {
@@ -76,10 +81,44 @@ input[type=number] {
 
 .home-div {
   display: flex;
-  width: 100%;
-  margin: 5% 0 50rem 0;
+  width: 90%;
+  margin: 5% 0 30% 10%;
   justify-content: space-evenly;
-  max-height: 33rem;
+
+
+}
+
+@media only screen and (min-width: 768px) {
+  .main-div {
+
+    width: 30%;
+    margin: 10% 35%;
+
+  }
+
+  .home-div {
+    display: flex;
+    width: 100%;
+    margin: 5% 0 50rem 0;
+    justify-content: space-evenly;
+    max-height: 33rem;
+
+  }
+
+
+  .cart {
+    margin: 5% 0;
+    width: 90%;
+  }
+
+  .category-div {
+    display: flex;
+    width: 100%;
+    margin: 5% 0;
+    justify-content: space-evenly;
+    max-height: 33rem;
+  }
+
 
 }
 
