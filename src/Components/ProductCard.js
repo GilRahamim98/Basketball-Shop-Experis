@@ -15,7 +15,7 @@ import { UserWishList } from './Context/UserContext'
 
 function ProductCard(props) {
 
-    const [imagesArr, setImagesArr] = useState([])
+    // const [imagesArr, setImagesArr] = useState([])
     const [loading, setLoading] = useState(true)
     const wishlist = useContext(UserWishList)
     const [inWish, setInWish] = useState(false)
@@ -25,7 +25,7 @@ function ProductCard(props) {
     useEffect(() => {
         async function getData() {
             // setImagesArr(await getProductImagesById(id))
-            setImagesArr(props.product.images)
+            // setImagesArr(props.product.images)
             isInWishList()
             setLoading(false)
         }
@@ -34,7 +34,7 @@ function ProductCard(props) {
 
 
     const setImages = () => {
-        return imagesArr.map(image =>
+        return props.product.images.map(image =>
             <Carousel.Item key={image.id}>
                 <img
                     className="d-block w-100"
