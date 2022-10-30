@@ -35,10 +35,15 @@ root.render(
         <Route path="/Cart" element={<Cart />} />
         <Route path="/Login" element={<LoginPage />} />
         <Route path="/Register" element={<RegisterPage />} />
-        <Route path="/MyProfile" element={<MyAccount />} />
+        <Route path="/MyProfile" element={<MyAccount />} >
+          {/* <Route index element={<MyAccount />} /> */}
+
+
+        </Route>
+        <Route path="/MyProfile/wishlist" element={<Wishlist />} />
+
         <Route path="/Products/:id" element={<ProductDetails />} />
         <Route path="/ContactUs" element={<ContactUs />} />
-        <Route path="/wishlist" element={<Wishlist />} />
         <Route path="/MyProfile/editMyAccount" element={<EditMyProfile />} />
         <Route path="/MyProfile/orders" element={<MyOrders />} />
         <Route path="/MyProfile/orders/:id" element={<Order />} />
