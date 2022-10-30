@@ -26,7 +26,7 @@ function BasketNavBar(props) {
     }, [])
 
     return (
-        <div> <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div> <nav className="navbar navbar-expand-lg navbar-dark bg-dark" style={{ zIndex: "1" }}>
             <div className="container-fluid">
                 <Link className="navbar-brand" to="/">
                     <img

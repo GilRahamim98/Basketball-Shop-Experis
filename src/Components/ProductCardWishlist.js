@@ -27,10 +27,10 @@ function ProductCardWishlist(props) {
 
     const createCards = () => {
         return (
-            <div key={`${product.id}`} className="card mb-3" style={{ maxWidth: "540px" }}>
+            <div key={`${product.id}`} className="card mb-3 wishlistcard" >
                 <div className="row g-0">
                     <div className="col-md-4">
-                        <img src={productImage.image_src} className="img-fluid rounded-start" alt="..."></img>
+                        <img src={productImage.image_src} className="img-fluid rounded-start" alt={product.name}></img>
                     </div>
                     <div className="col-md-8">
                         <div className="card-body">
@@ -49,7 +49,7 @@ function ProductCardWishlist(props) {
     return (
         <div>
             {
-                loading ? <h1>Hey</h1> : createCards()
+                loading ? null : createCards()
             }
 
         </div>
