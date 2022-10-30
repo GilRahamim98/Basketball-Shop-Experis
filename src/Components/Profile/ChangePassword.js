@@ -156,7 +156,7 @@ function ChangePassword() {
                 <Form onSubmit={handleSubmit}>
                     {createFormFields()}
                     {createNewPasswordField()}
-                    <Button variant="primary" type="submit" size="lg">
+                    <Button variant="outline-dark" type="submit" size="lg">
                         Submit
                     </Button>
 

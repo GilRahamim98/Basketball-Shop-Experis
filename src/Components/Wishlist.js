@@ -37,8 +37,10 @@ function Wishlist() {
     return (
         <div>
 
-            <div className='main-div'>
-                {wishlist.length > 0 ? <div className=''>
+            <div className='main-div' style={{ width: "100%", margin: "10% 0 0 55%" }}>
+                {wishlist.length > 0 ? <div>
+                    <h1>My Wishlist</h1>
+
                     {wishlist.map(item => createCardItem(item))}
 
                 </div> : <div >

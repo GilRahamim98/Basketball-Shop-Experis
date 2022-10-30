@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from 'react'
-import { Link, useParams, useNavigate } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 import { getOrderDetailsByOrderId, getProductById } from '../DAL/api'
 import ProductInOrderList from './ProductInOrderList.js'
-import { Button } from 'react-bootstrap';
 import { getCookie } from '../common/cookie'
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import Container from 'react-bootstrap/Container';
+
 
 
 function Order() {
@@ -31,9 +34,14 @@ function Order() {
 
 
     return (
-        <div className='main-div'>
-            <Link className='btn btn-outline-dark' to="/MyProfile/Orders">Go Back To All Orders</Link>
-            {orderDetail.length > 0 ? orderDetail.map(orderDetail => <ProductInOrderList key={orderDetail.item_id} orderItem={orderDetail}></ProductInOrderList>) : ""}
+        <div className='orders_items_list'>
+
+            <Container>
+                <Row>
+                    {orderDetail.length > 0 ? orderDetail.map(orderDetail => <Col key={orderDetail.item_id}><ProductInOrderList orderItem={orderDetail}></ProductInOrderList></Col>) : null}
+
+                </Row>
+            </Container>
 
         </div>
     )

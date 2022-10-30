@@ -22,27 +22,29 @@ function MyOrders() {
         }
         getOrders(getCookie("id"))
     }, [])
+    const handleOnClick = (orderId) => {
+        navigate(`/MyProfile/orders/${orderId}`)
+
+    }
     const createTHead = () => {
         return Object.keys(orders[0]).map(key => <th key={key}>{key.includes("_") ? key.replace("_", " ").toUpperCase() : key.toUpperCase()}</th>)
     }
     const createTBody = () => {
         let orderCounter = 1
-        return orders.map(order => <tr key={order.id}><td>{orderCounter++}</td><td>{new Date(order.order_date).toISOString().substring(0, 10)}</td><td>{order.shipped_date === null ? "The order has not yet been sent" : new Date(order.shipped_date).toISOString().substring(0, 10)}</td><td>{order.ship_address}</td><td>
-            <Link className="btn btn-outline-warning" to={`/MyProfile/orders/${order.id}`}>See order details</Link></td></tr>)
+        return orders.map(order => <tr key={order.id} onClick={() => handleOnClick(order.id)} ><td>{orderCounter++}</td><td>{new Date(order.order_date).toISOString().substring(0, 10)}</td><td>{order.shipped_date === null ? "The order has not yet been sent" : new Date(order.shipped_date).toISOString().substring(0, 10)}</td><td>{order.ship_address}</td></tr>)
     }
     return (
         <>
-            <div className='main-div' style={{
-                width: "50%", margin: "5% 20%"
-            }}>
+            <div className="orders" >
                 {orders.length > 0 ?
+
                     <div>
-                        <Link className="btn btn-outline-dark btn-lg" to="/myProfile">Go To Profile</Link>
-                        <Table striped="columns">
+                        <h1>Click On Order To See The Details</h1>
+                        <Table striped="columns" responsive>
                             <thead>
                                 <tr>
                                     {createTHead()}
-                                    <th>SEE ORDER</th>
+
                                 </tr>
                             </thead>
                             <tbody>

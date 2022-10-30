@@ -37,18 +37,18 @@ root.render(
         <Route path="/Register" element={<RegisterPage />} />
         <Route path="/MyProfile" element={<MyAccount />} >
           {/* <Route index element={<MyAccount />} /> */}
-
+          <Route path="wishlist" element={<Wishlist />} />
+          <Route path="changePassword" element={<ChangePassword />} />
+          <Route path="editMyAccount" element={<EditMyProfile />} />
+          <Route path="orders" element={<MyOrders />} />
+          <Route path="orders/:id" element={<Order />} />
 
         </Route>
-        <Route path="/MyProfile/wishlist" element={<Wishlist />} />
 
         <Route path="/Products/:id" element={<ProductDetails />} />
         <Route path="/ContactUs" element={<ContactUs />} />
-        <Route path="/MyProfile/editMyAccount" element={<EditMyProfile />} />
-        <Route path="/MyProfile/orders" element={<MyOrders />} />
-        <Route path="/MyProfile/orders/:id" element={<Order />} />
+
         <Route path="/search" element={<Search />} />
-        <Route path="/MyProfile/changePassword" element={<ChangePassword />} />
 
 
 

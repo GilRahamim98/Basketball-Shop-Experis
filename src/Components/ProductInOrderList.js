@@ -5,6 +5,7 @@ import { getProductFirstImageById, getProductById, changeOrderDetails, deleteOrd
 import Placeholder from 'react-bootstrap/Placeholder';
 
 
+
 function ProductInOrderList(props) {
 
     const [productImage, setProductImage] = useState({})
@@ -26,7 +27,7 @@ function ProductInOrderList(props) {
 
     })
     return (
-        <div>{loading ? <Card style={{ width: '18rem' }}>
+        <>{loading ? <Card style={{ width: '18rem' }}>
             <Card.Img variant="top" src="holder.js/100px180" />
             <Card.Body>
                 <Placeholder as={Card.Title} animation="glow">
@@ -39,24 +40,24 @@ function ProductInOrderList(props) {
                 <Placeholder.Button variant="primary" xs={6} />
             </Card.Body>
         </Card> :
-            <div>
-                <Card style={{ width: '18rem' }}>
-                    <Card.Img variant="top" src={productImage.image_src} />
-                    <Card.Body>
-                        <Card.Title>{product.item_name}</Card.Title>
-                        <Card.Text>
-                            {product.description}
-                        </Card.Text>
-                    </Card.Body>
-                    <ListGroup className="list-group-flush">
-                        <ListGroup.Item>Quantity:{props.orderItem.quantity}</ListGroup.Item>
-                        <ListGroup.Item>Total Price: {props.orderItem.quantity * props.orderItem.unit_price}$</ListGroup.Item>
 
-                    </ListGroup>
+            <Card style={{ width: '18rem' }}>
+                <Card.Img variant="top" src={productImage.image_src} />
+                <Card.Body>
+                    <Card.Title>{product.item_name}</Card.Title>
+                    <Card.Text>
+                        {product.description}
+                    </Card.Text>
+                </Card.Body>
+                <ListGroup className="list-group-flush">
+                    <ListGroup.Item>Quantity:{props.orderItem.quantity}</ListGroup.Item>
+                    <ListGroup.Item>Total Price: {props.orderItem.quantity * props.orderItem.unit_price}$</ListGroup.Item>
 
-                </Card>
-            </div>
-        } </div>
+                </ListGroup>
+
+            </Card>
+
+        } </>
 
     )
 }
